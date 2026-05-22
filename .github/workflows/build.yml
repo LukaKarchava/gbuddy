@@ -1,0 +1,66 @@
+name: Build GBuddy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Get project files
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build Linux app
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          pyinstaller --onefile --windowed --name GBuddy main.py
+
+      - name: Build Windows app
+        if: matrix.os == 'windows-latest'
+        run: |
+          pyinstaller --onefile --windowed --name GBuddy main.py
+
+      - name: Build macOS app
+        if: matrix.os == 'macos-latest'
+        run: |
+          pyinstaller --windowed --name GBuddy main.py
+
+      - name: Upload Linux build
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: GBuddy-Linux
+          path: dist/GBuddy
+
+      - name: Upload Windows build
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: GBuddy-Windows
+          path: dist/GBuddy.exe
+
+      - name: Upload macOS build
+        if: matrix.os == 'macos-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: GBuddy-macOS
+          path: dist/GBuddy.app
