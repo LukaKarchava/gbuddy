@@ -1,45 +1,39 @@
-# GBuddy ●
-**Your calm hotspot companion.**
+# GBuddy
 
-GBuddy is a premium desktop utility designed to protect your mobile data when using a phone hotspot on your laptop. It provides real-time tracking, a gentle mascot companion, and automatic protection features.
+GBuddy is a simple desktop app that helps you protect mobile hotspot data when sharing internet from your phone to your laptop.
 
-![GBuddy Icon](icon.png)
+It tracks how much data your laptop uses and lets you set a safe hotspot limit.
+
+## Why GBuddy exists
+
+When using mobile hotspot, data can disappear quickly. GBuddy helps you stay in control by showing:
+
+- data used today
+- your safe limit
+- data left before warning
+- internet coming in
+- internet going out
 
 ## Features
-- **Real-time Tracking:** See exactly how much data your laptop is consuming.
-- **Safe Limit:** Set a custom limit in GB; GBuddy will warn you before you hit it.
-- **Auto-Disconnect:** Automatically turn off WiFi on Linux when your limit is reached to save data.
-- **Premium Design:** Modern, minimal UI with smooth animations and a friendly mascot.
-- **Autostart:** Optionally start with your laptop to keep protection always active.
 
-## Installation
+- Simple one-screen interface
+- Mobile hotspot usage tracking
+- Custom safe GB limit
+- Auto-disconnect WiFi option on Linux
+- Clean dark UI
+- App launcher support on Linux
+- Built with Python and CustomTkinter
 
-### From Source
-1. Clone the repository.
-2. Install requirements:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the app:
-   ```bash
-   python main.py
-   ```
+## Screenshot
 
-### Build Standalone (Linux/Windows)
-Run the build script to create a single executable:
+![GBuddy screenshot](screenshots/gbuddy-home.png)
+
+## Run from source
+
 ```bash
-python build.py
-```
-Check the `dist/` folder for the `GBuddy` executable.
-
-## How it Works
-GBuddy monitors your network interface counters using `psutil`. It calculates the delta since the session started and compares it against your chosen "Safe Limit". 
-
-On Linux, it uses `nmcli` to safely toggle the WiFi radio if the auto-protect feature is enabled.
-
-## Platforms
-- **Linux:** Full support (including Auto-disconnect).
-- **Windows/macOS:** Tracking supported; Auto-disconnect coming soon.
-
----
-Crafted with precision by Luka Karchava.
+git clone https://github.com/LukaKarchava/gbuddy.git
+cd gbuddy
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python main.py
